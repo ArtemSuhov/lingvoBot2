@@ -42,4 +42,3 @@ public class HTTPRequests {
         return stringBuilder;
     }
 }
-
