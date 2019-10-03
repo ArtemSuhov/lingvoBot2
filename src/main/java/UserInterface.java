@@ -1,13 +1,7 @@
 public interface UserInterface {
-    public static boolean printMessage(String message) {
-        return false;
-    }
+    public boolean printMessage(String message);
 
-    public static String getInput() {
-        return "";
-    }
+    public String getInput();
 
-    public static boolean getClickOnButton(Button button) {
-        return true;
-    }
+    public boolean getClickOnButton(Button button);
 }

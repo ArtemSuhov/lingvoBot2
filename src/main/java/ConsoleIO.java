@@ -1,17 +1,17 @@
 import java.util.Scanner;
 
 public class ConsoleIO implements UserInterface {
-    public static boolean printMessage(String message){
+    public boolean printMessage(String message){
         System.out.println(message);
         return true;
     };
 
-    public static String getInput(){
+    public String getInput(){
         Scanner in = new Scanner(System.in);
         return in.nextLine();
     };
 
-    public static boolean getClickOnButton(Button button){
+    public boolean getClickOnButton(Button button){
         return true;
     };
 }

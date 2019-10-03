@@ -3,8 +3,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class HTTPRequests {
-    public static StringBuilder getRequest(String url, String method) {
+public class HTTPRequester {
+    public String getRequest(String url, String method) {
         String query = url;
         HttpURLConnection connection = null;
         StringBuilder stringBuilder = new StringBuilder();
@@ -39,6 +39,6 @@ public class HTTPRequests {
             }
         }
 
-        return stringBuilder;
+        return stringBuilder.toString();
     }
 }
