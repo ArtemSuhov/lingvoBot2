@@ -2,15 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fefc1b4f-50b3-4263-b1e7-c8d7d7badf24" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Bot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Bot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Button.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Button.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ConsoleIO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ConsoleIO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/HTTPRequests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HTTPRequester.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Translater.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Translater.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UserInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Bot.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bot.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ConsoleIO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ConsoleIO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/HTTPRequester.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/HTTPRequester.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Translater.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Translater.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,9 +23,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="HTML File" />
         <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -90,8 +90,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Maven.java_bot [clean,package]" />
       <item itemvalue="Application.Main" />
+      <item itemvalue="Maven.java_bot [clean,package]" />
     </list>
     <recent_temporary>
       <list>
@@ -117,7 +117,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
