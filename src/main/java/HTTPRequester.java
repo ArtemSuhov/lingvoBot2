@@ -14,8 +14,8 @@ public class HTTPRequester {
 
             connection.setRequestMethod(method);
             connection.setUseCaches(false);
-            connection.setConnectTimeout(250);
-            connection.setReadTimeout(250);
+            connection.setConnectTimeout(1000);
+            connection.setReadTimeout(1000);
 
             connection.connect();
 

@@ -14,10 +14,4 @@ public class ConsoleIO implements UserInterface {
     }
 
     ;
-
-    public boolean getClickOnButton(Button button) {
-        return true;
-    }
-
-    ;
 }
