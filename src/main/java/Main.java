@@ -11,13 +11,22 @@ import java.util.function.Function;
 public class Main {
     public static void main(String[] args) {
 
-        ApiContextInitializer.init();
-        TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
-        TelegramIO telegramIO = new TelegramIO();
-        try {
-            telegramBotsApi.registerBot(telegramIO);
-        } catch (TelegramApiRequestException e) {
-            e.printStackTrace();
+        UserInterface inputerOutputer;
+        boolean isTelegram = true;
+        if (!isTelegram) {
+            ConsoleIO consoleIO = new ConsoleIO();
+            inputerOutputer = consoleIO;
+        } else {
+            ApiContextInitializer.init();
+            TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
+            TelegramIO telegramIO = new TelegramIO();
+            inputerOutputer = telegramIO;
+            try {
+                telegramBotsApi.registerBot(telegramIO);
+            } catch (TelegramApiRequestException e) {
+                e.printStackTrace();
+                //TODO: Запись ошиибок в логи, шатдавн.
+            }
         }
 
         Bot bot = new Bot();
@@ -35,22 +44,25 @@ public class Main {
         String command = "";
 
         while (true) {
-            if (telegramIO.getInput() != null) {
-                input = telegramIO.getInput().split(" ");
-                command = input[0];
-                if (input.length > 1)
-                    arguments = Arrays.copyOfRange(input, 1, input.length);
+            input = inputerOutputer.getInput().split(" ");
 
-                String[] response = {"Invalid command"};
-                if (commands.containsKey(command)) {
-                    response = commands.get(command).apply(arguments);
-                }
-
-                StringBuilder result = new StringBuilder();
-                for (int i = 0; i < response.length; i++)
-                    result.append(response[i] + " ");
-                telegramIO.printMessage(result.toString());
+            if (input.length == 0) {
+                continue;
             }
+
+            command = input[0];
+            if (input.length > 1)
+                arguments = Arrays.copyOfRange(input, 1, input.length);
+
+            String[] response = {"Invalid command"};
+            if (commands.containsKey(command)) {
+                response = commands.get(command).apply(arguments);
+            }
+
+            StringBuilder result = new StringBuilder();
+            for (int i = 0; i < response.length; i++)
+                result.append(response[i] + " ");
+            inputerOutputer.printMessage(result.toString());
         }
     }
 }

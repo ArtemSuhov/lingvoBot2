@@ -1,7 +1,4 @@
-import org.checkerframework.checker.nullness.qual.KeyForBottom;
-import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -9,15 +6,15 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
-import org.telegram.telegrambots.meta.generics.LongPollingBot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 public class TelegramIO extends TelegramLongPollingBot implements UserInterface {
-    Stack<Update> StackOfRequests = new Stack<Update>();
+    BlockingQueue<Update> queueOfRequests = new LinkedBlockingQueue<Update>();
     Message currentMessage = new Message();
 
     public boolean printMessage(String text) {
@@ -45,17 +42,22 @@ public class TelegramIO extends TelegramLongPollingBot implements UserInterface 
     public String getInput() {
         Update currentUpdate = new Update();
 
-        if (!StackOfRequests.isEmpty()) {
-            currentUpdate = StackOfRequests.pop();
+        try {
+            currentUpdate = queueOfRequests.poll(1000, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if (currentUpdate != null && currentUpdate.hasMessage()) {
             currentMessage = currentUpdate.getMessage();
         }
 
-        return currentMessage.hasText() ? currentMessage.getText() : null;
+        return currentMessage.hasText() ? currentMessage.getText() : new String();
     }
 
     ;
 
-    public void setButtons(SendMessage sendMessage) {
+    private void setButtons(SendMessage sendMessage) {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         sendMessage.setReplyMarkup(replyKeyboardMarkup);
         replyKeyboardMarkup.setSelective(true);
@@ -74,7 +76,7 @@ public class TelegramIO extends TelegramLongPollingBot implements UserInterface 
     }
 
     public void onUpdateReceived(Update update) {
-        StackOfRequests.push(update);
+        queueOfRequests.offer(update);
     }
 
     public String getBotUsername() {
