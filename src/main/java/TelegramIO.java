@@ -1,6 +1,5 @@
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
@@ -15,17 +14,15 @@ import java.util.concurrent.TimeUnit;
 
 public class TelegramIO extends TelegramLongPollingBot implements UserInterface {
     BlockingQueue<Update> queueOfRequests = new LinkedBlockingQueue<Update>();
-    Message currentMessage = new Message();
 
-    public boolean printMessage(String text) {
+    public boolean printMessage(BotMessage text) {
         Update currentUpdate = new Update();
         SendMessage messageForSending = new SendMessage();
 
-        if (currentMessage.hasText()) {
+        if (text.textOfMessage.length() > 0) {
             messageForSending.enableMarkdown(true);
-            messageForSending.setChatId(currentMessage.getChatId().toString());
-            messageForSending.setText(text);
-            currentMessage = new Message();
+            messageForSending.setChatId(text.chatId);
+            messageForSending.setText(text.textOfMessage);
         }
         if (messageForSending.getText() != null) {
             try {
@@ -39,7 +36,7 @@ public class TelegramIO extends TelegramLongPollingBot implements UserInterface 
         return true;
     }
 
-    public String getInput() {
+    public BotMessage getInput() {
         Update currentUpdate = new Update();
 
         try {
@@ -48,11 +45,14 @@ public class TelegramIO extends TelegramLongPollingBot implements UserInterface 
             e.printStackTrace();
         }
 
+        BotMessage currentMessage = null;
+
         if (currentUpdate != null && currentUpdate.hasMessage()) {
-            currentMessage = currentUpdate.getMessage();
+            currentMessage = new BotMessage(currentUpdate.getMessage().getText(),
+                    currentUpdate.getMessage().getChatId().toString());
         }
 
-        return currentMessage.hasText() ? currentMessage.getText() : new String();
+        return currentMessage;
     }
 
     ;

@@ -1,16 +1,17 @@
 import java.util.Scanner;
 
 public class ConsoleIO implements UserInterface {
-    public boolean printMessage(String message) {
-        System.out.println(message);
+    public boolean printMessage(BotMessage message) {
+        System.out.println(message.textOfMessage);
         return true;
     }
 
     ;
 
-    public String getInput() {
+    public BotMessage getInput() {
         Scanner in = new Scanner(System.in);
-        return in.nextLine();
+        BotMessage message = new BotMessage(in.nextLine(), "Console");
+        return message;
     }
 
     ;

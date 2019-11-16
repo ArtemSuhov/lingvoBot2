@@ -1,5 +1,5 @@
 public interface UserInterface {
-    public boolean printMessage(String message);
+    public boolean printMessage(BotMessage message);
 
-    public String getInput();
+    public BotMessage getInput();
 }

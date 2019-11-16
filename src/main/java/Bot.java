@@ -3,6 +3,7 @@ public class Bot {
             "/echo text - print your text, that writed after this command\n" +
             "/random minValue maxValue - print a random number from range\n" +
             "/toRus text - translate English text into Russian\n" +
+            "/quiz - play the quiz game\n" +
             "/authors - print the authors"};
 
     private static String[] wrongMessage = new String[]{"Wrong arguments!!!"};
@@ -11,8 +12,7 @@ public class Bot {
 
     private static String[] welcome = new String[]{"You can write \"/help\",if you want to see the list of commands."};
 
-    public String[] getWelcome(String[] args)
-    {
+    public String[] getWelcome(String[] args) {
         return welcome;
     }
 
