@@ -1,12 +1,13 @@
 public class Quiz {
 
+    private static int numberOfQuestions = 5;
     public String[] getQuestion(String[] args) {
-        int max = 5;
+        int max = numberOfQuestions;
         int min = 1;
         Integer randomNumber = (int) ((Math.random() * ((max - min) + 1)) + min);
         User currentUser = Main.fireBase.getUser(args[0]);
 
-        if (currentUser.answeredQuestions.length() == 10) {
+        if (currentUser.answeredQuestions.length() == numberOfQuestions * 2) {
             return new String[]{"You answered all questions!"};
         }
 
