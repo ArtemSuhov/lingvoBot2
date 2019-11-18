@@ -10,8 +10,17 @@ import java.util.concurrent.ExecutionException;
 
 public class FireBase implements UserDatabase {
     private static DatabaseReference databaseReference;
+    private static FireBase instance;
 
-    FireBase() {
+    public static FireBase getInstance() {
+        if (instance == null) {
+            instance = new FireBase();
+        }
+
+        return instance;
+    }
+
+    private FireBase() {
         FileInputStream serviceAccount = null;
         try {
             serviceAccount =

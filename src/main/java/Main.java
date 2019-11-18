@@ -5,15 +5,15 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
 public class Main {
-    public static FireBase fireBase = new FireBase();
+    private static FireBase fireBase = FireBase.getInstance();
 
     public static void main(String[] args) {
 
         UserInterface inputerOutputer;
-        boolean isTelegram = true;
+        boolean isTelegram = false;
 
         if (!isTelegram) {
             ConsoleIO consoleIO = new ConsoleIO();
@@ -34,16 +34,17 @@ public class Main {
         Bot bot = new Bot();
         Quiz quiz = new Quiz();
 
-        Map<String, Function<String[], String[]>> commands = new HashMap<>();
+        Map<String, BiFunction<String[], User, String[]>> commands = new HashMap<>();
         commands.put("/start", bot::getWelcome);
         commands.put("/quiz", quiz::getQuestion);
         commands.put("/toRus", bot::getRussianTranslation);
         commands.put("/help", bot::getHelpMessage);
         commands.put("/random", bot::getRandomFromRange);
         commands.put("/echo", bot::getEcho);
+        commands.put("/stat", quiz::getStats);
         commands.put("/authors", bot::getAuthors);
 
-        Map<String, Function<String[], String[]>> games = new HashMap<>();
+        Map<String, BiFunction<String[], User, String[]>> games = new HashMap<>();
         games.put("quiz", quiz::getAnswer);
 
         String[] input = {""};
@@ -76,22 +77,10 @@ public class Main {
 
             String[] response = {"Invalid command"};
 
-            if (games.containsKey(command.substring(1))) {
-                arguments = new String[]{currentUser.id};
-                response = commands.get(command).apply(arguments);
-            } else if (commands.containsKey(command)) {
-                response = commands.get(command).apply(arguments);
-            }
-
             if (currentUser.state.contains("Game")) {
-                arguments = new String[input.length + 1];
-
-                for(int i = 0; i < input.length; i++){
-                    arguments[i+1] = input[i];
-                }
-                arguments[0] = currentUser.id;
-
-                response = games.get(currentUser.state.split(" ")[1]).apply(arguments);
+                response = games.get(currentUser.state.split(" ")[1]).apply(input, currentUser);
+            } else if (commands.containsKey(command)) {
+                response = commands.get(command).apply(arguments, currentUser);
             }
 
             StringBuilder result = new StringBuilder();

@@ -4,6 +4,7 @@ public class Bot {
             "/random minValue maxValue - print a random number from range\n" +
             "/toRus text - translate English text into Russian\n" +
             "/quiz - play the quiz game\n" +
+            "/stat - amount of the answered questions\n" +
             "/authors - print the authors"};
 
     private static String[] wrongMessage = new String[]{"Wrong arguments!!!"};
@@ -12,11 +13,11 @@ public class Bot {
 
     private static String[] welcome = new String[]{"You can write \"/help\",if you want to see the list of commands."};
 
-    public String[] getWelcome(String[] args) {
+    public String[] getWelcome(String[] args, User user) {
         return welcome;
     }
 
-    public String[] getRussianTranslation(String[] args) {
+    public String[] getRussianTranslation(String[] args, User user) {
         if (args.length == 0) {
             return wrongMessage;
         } else {
@@ -25,11 +26,11 @@ public class Bot {
         }
     }
 
-    public String[] getAuthors(String[] args) {
+    public String[] getAuthors(String[] args, User user) {
         return authors;
     }
 
-    public String[] getRandomFromRange(String[] args) {
+    public String[] getRandomFromRange(String[] args, User user) {
 
         if (args.length != 2) {
             return wrongMessage;
@@ -41,11 +42,11 @@ public class Bot {
         }
     }
 
-    public String[] getHelpMessage(String[] args) {
+    public String[] getHelpMessage(String[] args, User user) {
         return helpMessage;
     }
 
-    public String[] getEcho(String[] args) {
+    public String[] getEcho(String[] args, User user) {
         return args;
     }
 }

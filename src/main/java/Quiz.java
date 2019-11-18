@@ -1,44 +1,48 @@
 public class Quiz {
-
     private static int numberOfQuestions = 5;
-    public String[] getQuestion(String[] args) {
+    private static FireBase fireBase = FireBase.getInstance();
+
+    public String[] getQuestion(String[] args, User user) {
         int max = numberOfQuestions;
         int min = 1;
         Integer randomNumber = (int) ((Math.random() * ((max - min) + 1)) + min);
-        User currentUser = Main.fireBase.getUser(args[0]);
 
-        if (currentUser.answeredQuestions.length() == numberOfQuestions * 2) {
+        if (user.answeredQuestions.length() == numberOfQuestions * 2 + 2) {
             return new String[]{"You answered all questions!"};
         }
 
-        while (currentUser.answeredQuestions.contains(randomNumber.toString())) {
+        while (user.answeredQuestions.contains(randomNumber.toString())) {
             randomNumber = (int) ((Math.random() * ((max - min) + 1)) + min);
         }
 
-        currentUser.addAnsweredQuestion(randomNumber);
-        currentUser.changeState("Game quiz " + randomNumber.toString());
-        Main.fireBase.updateUser(currentUser);
+        user.addAnsweredQuestion(randomNumber);
+        user.changeState("Game quiz " + randomNumber.toString());
+        fireBase.updateUser(user);
 
-        return new String[]{"What is the", Main.fireBase.getQuestion(randomNumber.toString()).textOfQuestion, "in Russian?"};
+        return new String[]{"Translate the word",
+                "\"" + fireBase.getQuestion(randomNumber.toString()).textOfQuestion + "\"",
+                "into Russian"};
     }
 
-    public String[] getAnswer(String[] args) {
-        User currentUser = Main.fireBase.getUser(args[0]);
-        String questionId = currentUser.state.split(" ")[2];
+    public String[] getStats(String[] args, User user) {
+        return new String[]{"You have answered", String.valueOf(user.answeredQuestions.length() / 2 - 1), "questions"};
+    }
 
-        Question currentQuestion = Main.fireBase.getQuestion(questionId);
+    public String[] getAnswer(String[] args, User user) {
+        String questionId = user.state.split(" ")[2];
 
-        if (currentQuestion.answer.equals(args[1])) {
-            currentUser.changeState("Null");
-            Main.fireBase.updateUser(currentUser);
+        Question currentQuestion = fireBase.getQuestion(questionId);
+
+        if (currentQuestion.answer.toLowerCase().equals(args[0].toLowerCase())) {
+            user.changeState("Null");
+            fireBase.updateUser(user);
             return new String[]{"Your answer is right!"};
-        } else if ("answer".equals(args[1]))
-        {
-            currentUser.changeState("Null");
-            Main.fireBase.updateUser(currentUser);
-            return new String[] {"Right answer is", currentQuestion.answer};
+        } else if ("answer".equals(args[0])) {
+            user.changeState("Null");
+            fireBase.updateUser(user);
+            return new String[]{"Right answer is", currentQuestion.answer};
         }
 
-        return new String[] {"You are wrong! Try again! Or write \"answer\""};
+        return new String[]{"You are wrong! Try again! Or write \"answer\""};
     }
 }

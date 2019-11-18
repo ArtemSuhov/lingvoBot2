@@ -67,8 +67,8 @@ public class TelegramIO extends TelegramLongPollingBot implements UserInterface 
         List<KeyboardRow> keyboardRowList = new ArrayList<KeyboardRow>();
         KeyboardRow keyboardFirstRow = new KeyboardRow();
 
-        keyboardFirstRow.add(new KeyboardButton("/help"));
-        keyboardFirstRow.add(new KeyboardButton("/authors"));
+        keyboardFirstRow.add(new KeyboardButton("/quiz"));
+        keyboardFirstRow.add(new KeyboardButton("/stat"));
 
         keyboardRowList.add(keyboardFirstRow);
         replyKeyboardMarkup.setKeyboard(keyboardRowList);
