@@ -1,6 +1,7 @@
 public class Quiz {
     private static int numberOfQuestions = 5;
     private static FireBase fireBase = FireBase.getInstance();
+    private static String answer = "/answer";
 
     public String[] getQuestion(String[] args, User user) {
         int max = numberOfQuestions;
@@ -16,7 +17,7 @@ public class Quiz {
         }
 
         user.addAnsweredQuestion(randomNumber);
-        user.changeState("Game quiz " + randomNumber.toString());
+        user.changeState("Quiz");
         fireBase.updateUser(user);
 
         return new String[]{"Translate the word",
@@ -29,20 +30,21 @@ public class Quiz {
     }
 
     public String[] getAnswer(String[] args, User user) {
-        String questionId = user.state.split(" ")[2];
+        String[] questionsIds = user.answeredQuestions.split(" ");
+        String questionId = questionsIds[questionsIds.length - 1];
 
         Question currentQuestion = fireBase.getQuestion(questionId);
 
         if (currentQuestion.answer.toLowerCase().equals(args[0].toLowerCase())) {
-            user.changeState("Null");
+            user.changeState("Default");
             fireBase.updateUser(user);
             return new String[]{"Your answer is right!"};
-        } else if ("answer".equals(args[0])) {
-            user.changeState("Null");
+        } else if (answer.equals(args[0])) {
+            user.changeState("Default");
             fireBase.updateUser(user);
             return new String[]{"Right answer is", currentQuestion.answer};
         }
 
-        return new String[]{"You are wrong! Try again! Or write \"answer\""};
+        return new String[]{"You are wrong! Try again! Or write", answer};
     }
 }

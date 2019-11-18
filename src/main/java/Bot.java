@@ -13,8 +13,15 @@ public class Bot {
 
     private static String[] welcome = new String[]{"You can write \"/help\",if you want to see the list of commands."};
 
+    private static String[] defaultOut = new String[]{"Invalid command"};
+
+
     public String[] getWelcome(String[] args, User user) {
         return welcome;
+    }
+
+    public String[] getDefault(String[] args, User user) {
+        return defaultOut;
     }
 
     public String[] getRussianTranslation(String[] args, User user) {

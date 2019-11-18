@@ -4,15 +4,11 @@
     <list default="true" id="fefc1b4f-50b3-4263-b1e7-c8d7d7badf24" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Bot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Bot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FireBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FireBase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Quiz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Quiz.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/TelegramIO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TelegramIO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FireBase$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FireBase$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FireBase$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FireBase$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FireBase$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FireBase$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FireBase.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FireBase.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Quiz.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Quiz.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/User.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -125,6 +121,27 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Quiz.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Quiz.java</url>
+          <line>35</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Quiz.java</url>
+          <line>37</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/java_bot$Main.ic" NAME="Main Coverage Results" MODIFIED="1574058083438" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

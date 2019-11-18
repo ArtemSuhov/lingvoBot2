@@ -9,6 +9,7 @@ import java.util.function.BiFunction;
 
 public class Main {
     private static FireBase fireBase = FireBase.getInstance();
+    private static String prefixCommand = "/";
 
     public static void main(String[] args) {
 
@@ -34,22 +35,26 @@ public class Main {
         Bot bot = new Bot();
         Quiz quiz = new Quiz();
 
+        Map<String, Map<String, BiFunction<String[], User, String[]>>> states = new HashMap<>();
+
         Map<String, BiFunction<String[], User, String[]>> commands = new HashMap<>();
-        commands.put("/start", bot::getWelcome);
-        commands.put("/quiz", quiz::getQuestion);
-        commands.put("/toRus", bot::getRussianTranslation);
-        commands.put("/help", bot::getHelpMessage);
-        commands.put("/random", bot::getRandomFromRange);
-        commands.put("/echo", bot::getEcho);
-        commands.put("/stat", quiz::getStats);
-        commands.put("/authors", bot::getAuthors);
+        commands.put(prefixCommand + "start", bot::getWelcome);
+        commands.put(prefixCommand + "quiz", quiz::getQuestion);
+        commands.put(prefixCommand + "toRus", bot::getRussianTranslation);
+        commands.put(prefixCommand + "help", bot::getHelpMessage);
+        commands.put(prefixCommand + "random", bot::getRandomFromRange);
+        commands.put(prefixCommand + "echo", bot::getEcho);
+        commands.put(prefixCommand + "stat", quiz::getStats);
+        commands.put(prefixCommand + "authors", bot::getAuthors);
+        commands.put("", bot::getDefault);
 
-        Map<String, BiFunction<String[], User, String[]>> games = new HashMap<>();
-        games.put("quiz", quiz::getAnswer);
+        Map<String, BiFunction<String[], User, String[]>> quizCommands = new HashMap<>();
+        quizCommands.put("", quiz::getAnswer);
 
-        String[] input = {""};
-        String[] arguments = {""};
-        String command = "";
+        states.put("Quiz", quizCommands);
+        states.put(User.defaultState, commands);
+
+        String input = "";
         BotMessage inputMessage;
 
         while (true) {
@@ -59,9 +64,9 @@ public class Main {
                 continue;
             }
 
-            input = inputMessage.textOfMessage.split(" ");
+            input = inputMessage.textOfMessage;
 
-            if (input.length == 0) {
+            if (input.length() == 0) {
                 continue;
             }
 
@@ -71,16 +76,25 @@ public class Main {
                 currentUser = fireBase.getUser(inputMessage.chatId);
             }
 
-            command = input[0];
-            if (input.length > 1)
-                arguments = Arrays.copyOfRange(input, 1, input.length);
+            String[] response;
+            String currentState = currentUser.state;
+            String[] inputArray = input.split(" ");
+            String command = input.startsWith(prefixCommand) ? inputArray[0] : "";
 
-            String[] response = {"Invalid command"};
+            Boolean isThereCommand = states.get(currentState).containsKey(command);
+            if (isThereCommand) {
+                String[] arguments = {""};
+                BiFunction<String[], User, String[]> function = states.get(currentState).get(command);
 
-            if (currentUser.state.contains("Game")) {
-                response = games.get(currentUser.state.split(" ")[1]).apply(input, currentUser);
-            } else if (commands.containsKey(command)) {
-                response = commands.get(command).apply(arguments, currentUser);
+                if (inputArray.length > 1) {
+                    arguments = Arrays.copyOfRange(inputArray, 1, inputArray.length);
+                }
+
+                response = input.startsWith(prefixCommand)
+                        ? function.apply(arguments, currentUser)
+                        : function.apply(inputArray, currentUser);
+            } else {
+                response = states.get(currentState).get("").apply(inputArray, currentUser);
             }
 
             StringBuilder result = new StringBuilder();
