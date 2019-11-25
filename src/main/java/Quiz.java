@@ -1,9 +1,9 @@
 public class Quiz {
-    private static int numberOfQuestions = 5;
     private static FireBase fireBase = FireBase.getInstance();
     private static String answer = "/answer";
 
     public String[] getQuestion(String[] args, User user) {
+        int numberOfQuestions = fireBase.getCountOfQuestions();
         int max = numberOfQuestions;
         int min = 1;
         Integer randomNumber = (int) ((Math.random() * ((max - min) + 1)) + min);
@@ -13,7 +13,7 @@ public class Quiz {
         }
 
         while (user.answeredQuestions.contains(randomNumber.toString())) {
-            randomNumber = (int) ((Math.random() * ((max - min) + 1)) + min);
+            randomNumber = (randomNumber + 1) % numberOfQuestions;
         }
 
         user.addAnsweredQuestion(randomNumber);

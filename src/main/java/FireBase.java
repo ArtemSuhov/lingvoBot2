@@ -11,6 +11,8 @@ import java.util.concurrent.ExecutionException;
 public class FireBase implements UserDatabase {
     private static DatabaseReference databaseReference;
     private static FireBase instance;
+    private final String usersPath = "Users";
+    private final String questionsPath = "Questions";
 
     public static FireBase getInstance() {
         if (instance == null) {
@@ -40,74 +42,58 @@ public class FireBase implements UserDatabase {
         }
 
         FirebaseApp.initializeApp(options);
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+    }
+
+    private String getString(String path, String id) {
+        CompletableFuture<String> task = new CompletableFuture<>();
+
+        databaseReference.child(path).child(id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String value = dataSnapshot.getValue(String.class);
+                task.complete(value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                //TODO: Добавить логирование
+            }
+        });
+
+        try {
+            String response = task.get();
+            return response;
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     public User getUser(String id) {
-        CompletableFuture<String> task = new CompletableFuture<>();
+        String response = this.getString(usersPath, id);
 
-        databaseReference.child(id).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue(String.class);
-                task.complete(value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                //TODO: Добавить логирование
-            }
-        });
-
-        try {
-            String response = task.get();
-
-            if (response == null) {
-                return null;
-            }
-
-            return new User(id, response.split(";")[0], response.split(";")[1]);
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+        if (response == null) {
             return null;
         }
-    }
 
-    ;
+        String[] args = response.split(";");
+        return new User(id, args[0], args[1], args[2]);
+    }
 
     public Question getQuestion(String id) {
-        CompletableFuture<String> task = new CompletableFuture<>();
+        String response = this.getString(questionsPath, id);
 
-        databaseReference.getParent().child("Questions").child(id).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue(String.class);
-                task.complete(value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                //TODO: Добавить логирование
-            }
-        });
-
-        try {
-            String response = task.get();
-            if (response == null) {
-                return null;
-            }
-
-            return new Question(Integer.parseInt(id), response.split(":")[0], response.split(":")[1]);
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+        if (response == null) {
             return null;
         }
+
+        return new Question(Integer.parseInt(id), response.split(":")[0], response.split(":")[1]);
     }
 
-    ;
 
-    public void updateUser(User user) {
-
+    private void setString(String path, String id, String content) {
         DatabaseReference.CompletionListener completionListener = new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
@@ -115,8 +101,34 @@ public class FireBase implements UserDatabase {
             }
         };
 
-        databaseReference.child(user.id).setValue(user.answeredQuestions + ";" + user.state, completionListener);
+        databaseReference
+                .child(path)
+                .child(id)
+                .setValue(content, completionListener);
     }
 
-    ;
+    public void updateUser(User user) {
+        this.setString(usersPath, user.id, user.answeredQuestions + ";" + user.state + ";" + user.timeOfDay);
+    }
+
+    public Integer getCountOfQuestions (){
+        String response = this.getString(questionsPath, "count");
+
+        Integer countOfQuestions;
+
+        if (response == null) {
+            countOfQuestions = 0;
+        } else {
+            countOfQuestions = Integer.parseInt(response);
+        }
+
+        return countOfQuestions;
+    }
+
+    public void addQuestion(Question question) {
+        Integer countOfQuestions = this.getCountOfQuestions();
+        countOfQuestions += 1;
+        this.setString(questionsPath, countOfQuestions.toString(), question.textOfQuestion + ":" + question.answer);
+        this.setString(questionsPath, "count", countOfQuestions.toString());
+    }
 }
