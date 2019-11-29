@@ -26,7 +26,8 @@ public class FireBase implements UserDatabase {
         FileInputStream serviceAccount = null;
         try {
             serviceAccount =
-                    new FileInputStream("C:\\Users\\Артем\\IdeaProjects\\java_bot\\lingvomasterbot-firebase-adminsdk-8ll0a-087d4219a2.json");
+                    new FileInputStream(System.getProperty("user.dir") +
+                            "\\lingvomasterbot-firebase-adminsdk-8ll0a-087d4219a2.json");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -111,7 +112,7 @@ public class FireBase implements UserDatabase {
         this.setString(usersPath, user.id, user.answeredQuestions + ";" + user.state + ";" + user.timeOfDay);
     }
 
-    public Integer getCountOfQuestions (){
+    public Integer getCountOfQuestions() {
         String response = this.getString(questionsPath, "count");
 
         Integer countOfQuestions;
