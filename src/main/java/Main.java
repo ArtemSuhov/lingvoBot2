@@ -35,7 +35,7 @@ public class Main {
         Bot bot = new Bot();
         Quiz quiz = new Quiz();
 
-        Map<String, Map<String, BiFunction<String[], User, String[]>>> states = new HashMap<>();
+        Map<UserState, Map<String, BiFunction<String[], User, String[]>>> states = new HashMap<>();
 
         Map<String, BiFunction<String[], User, String[]>> commands = new HashMap<>();
         commands.put(prefixCommand + "start", bot::getWelcome);
@@ -51,8 +51,8 @@ public class Main {
         Map<String, BiFunction<String[], User, String[]>> quizCommands = new HashMap<>();
         quizCommands.put("", quiz::getAnswer);
 
-        states.put("Quiz", quizCommands);
-        states.put(User.defaultState, commands);
+        states.put(UserState.QUIZ, quizCommands);
+        states.put(UserState.DEFAULT, commands);
 
         String input = "";
         BotMessage inputMessage;
@@ -77,7 +77,7 @@ public class Main {
             }
 
             String[] response;
-            String currentState = currentUser.state;
+            UserState currentState = currentUser.state;
             String[] inputArray = input.split(" ");
             String command = input.startsWith(prefixCommand) ? inputArray[0] : "";
 

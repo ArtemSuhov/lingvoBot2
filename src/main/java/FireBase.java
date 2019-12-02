@@ -74,13 +74,21 @@ public class FireBase implements UserDatabase {
 
     public User getUser(String id) {
         String response = this.getString(usersPath, id);
+        UserState state;
 
         if (response == null) {
             return null;
         }
 
         String[] args = response.split(";");
-        return new User(id, args[0], args[1], args[2]);
+        switch (args[1]){
+            case "QUIZ":
+                state = UserState.QUIZ;
+                break;
+            default:
+                state = UserState.DEFAULT;
+        }
+        return new User(id, args[0], state, args[2]);
     }
 
     public Question getQuestion(String id) {
