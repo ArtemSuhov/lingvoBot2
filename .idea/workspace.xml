@@ -2,9 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fefc1b4f-50b3-4263-b1e7-c8d7d7badf24" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Reminder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Bot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Bot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FireBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FireBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Reminder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Reminder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/UserState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UserState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tests/java/TestQuiz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/java/TestQuiz.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Bot.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bot.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FireBase$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FireBase$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FireBase$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FireBase$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FireBase.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FireBase.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TestQuiz.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TestQuiz.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/UserState.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/UserState.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,6 +37,12 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
   </component>
   <component name="ProjectId" id="1RMmAP3LJNavpCrPn8gzqoihdPZ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -57,7 +76,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.TestQuiz">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="lingvoBot2" />
@@ -140,8 +159,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TestQuiz" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.TestQuiz" />
         <item itemvalue="JUnit.TestQuiz.testGetStat" />
         <item itemvalue="JUnit.TestQuiz.testGetAnswer" />
         <item itemvalue="JUnit.TestQuiz.testWrongAnswer" />
@@ -181,6 +200,15 @@
     </option>
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Reminder.java</url>
+          <line>27</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="JUnit">
         <watch expression="user.answeredQuestions" language="JAVA" />

@@ -32,8 +32,7 @@ public class Main {
                 //TODO: Запись ошиибок в логи, шатдавн.
             }
         }
-
-        Bot bot = new Bot();
+        Bot bot = new Bot(fireBase);
         Quiz quiz = new Quiz();
 
         Map<UserState, Map<String, BiFunction<String[], User, String[]>>> states = new HashMap<>();
@@ -106,7 +105,7 @@ public class Main {
             inputerOutputer.printMessage(new BotMessage(result.toString(), inputMessage.chatId));
             Timer timer = new Timer();
             var reminder = new Reminder(fireBase, inputerOutputer);
-            timer.schedule(reminder, 0, 400000);
+            timer.schedule(reminder, 0, 10);
         }
     }
 }

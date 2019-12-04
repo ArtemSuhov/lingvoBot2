@@ -1,4 +1,5 @@
 public enum UserState {
     DEFAULT,
-    QUIZ
+    QUIZ,
+    CHOOSING
 }

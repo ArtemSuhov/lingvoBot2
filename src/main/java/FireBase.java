@@ -77,21 +77,13 @@ public class FireBase implements UserDatabase {
 
     public User getUser(String id) {
         String response = this.getString(usersPath, id);
-        UserState state;
 
         if (response == null) {
             return null;
         }
 
         String[] args = response.split(";");
-        switch (args[1]){
-            case "QUIZ":
-                state = UserState.QUIZ;
-                break;
-            default:
-                state = UserState.DEFAULT;
-        }
-        return new User(id, args[0], state, args[2]);
+        return new User(id, args[0], UserState.valueOf(args[1]), args[2], Boolean.valueOf(args[3]));
     }
 
     public Question getQuestion(String id) {
@@ -120,22 +112,25 @@ public class FireBase implements UserDatabase {
     }
 
     public void updateUser(User user) {
-        this.setString(usersPath, user.id, user.answeredQuestions + ";" + user.state + ";" + user.timeOfDay);
+        this.setString(usersPath, user.id, user.answeredQuestions + ";" + user.state
+                + ";" + user.timeOfDay + ";" + user.isSentWord);
     }
 
     public List<User> getAllUsers(){
         List<User> users = new ArrayList<>();
-        List<String> usersId = new ArrayList<>();
-        CompletableFuture<List<String>> task = new CompletableFuture<>();
+        CompletableFuture<List<User>> task = new CompletableFuture<>();
         databaseReference.child(usersPath).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterator<DataSnapshot> items = dataSnapshot.getChildren().iterator();
                 while (items.hasNext()){
                     DataSnapshot item = items.next();
-                    usersId.add(item.getKey());
+                    String id = item.getKey();
+                    String[] userFields = item.getValue().toString().split(";");
+                    users.add(new User(id, userFields[0], UserState.valueOf(userFields[1]),
+                            userFields[2], Boolean.valueOf(userFields[3])));
                 }
-                task.complete(usersId);
+                task.complete(users);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -143,10 +138,7 @@ public class FireBase implements UserDatabase {
             }
         });
         try {
-            List<String> response = task.get();
-            for (String id: response){
-                users.add(getUser(id));
-            }
+            List<User> response = task.get();
             return users;
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();

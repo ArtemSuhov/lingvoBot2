@@ -14,6 +14,7 @@ public class User {
         this.answeredQuestions = "0 ";
         this.state = UserState.DEFAULT;
         this.timeOfDay = defaultTime;
+        this.isSentWord = false;
     }
 
     User(String id, String answeredQuestions) {
@@ -21,13 +22,15 @@ public class User {
         this.answeredQuestions = answeredQuestions;
         this.state = UserState.DEFAULT;
         this.timeOfDay = defaultTime;
+        this.isSentWord = false;
     }
 
-    User(String id, String answeredQuestions, UserState state, String time) {
+    User(String id, String answeredQuestions, UserState state, String time, boolean isSentWord) {
         this.id = id;
         this.answeredQuestions = answeredQuestions;
         this.state = state;
         this.timeOfDay = time;
+        this.isSentWord = isSentWord;
     }
 
     void addAnsweredQuestion(Integer id) {

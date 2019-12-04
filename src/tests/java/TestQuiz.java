@@ -30,7 +30,7 @@ public class TestQuiz{
 
     @Test
     public void testWrongAnswer(){
-        User user = new User("UserId", "0 1", UserState.QUIZ, "");
+        User user = new User("UserId", "0 1", UserState.QUIZ, "", false);
         Quiz quiz = new Quiz();
         String[] result = quiz.getAnswer(new String[] {"Wrong"}, user);
         Assert.assertEquals(UserState.QUIZ, user.state);
@@ -39,7 +39,7 @@ public class TestQuiz{
 
     @Test
     public void testGetAnswer(){
-        User user = new User("UserId", "0 1", UserState.QUIZ, "");
+        User user = new User("UserId", "0 1", UserState.QUIZ, "", false);
         Quiz quiz = new Quiz();
         String[] result = quiz.getAnswer(new String[] {"/answer"}, user);
         Assert.assertEquals(UserState.DEFAULT, user.state);
@@ -48,7 +48,7 @@ public class TestQuiz{
 
     @Test
     public void testGetStat(){
-        User user = new User("UserId", "0 1", UserState.QUIZ, "");
+        User user = new User("UserId", "0 1", UserState.QUIZ, "", false);
         Quiz quiz = new Quiz();
         String[] result = quiz.getStats(new String[] {}, user);
         Assert.assertArrayEquals(new String[] {"You have answered","1", "questions"}, result);
