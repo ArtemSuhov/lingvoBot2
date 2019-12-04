@@ -5,7 +5,8 @@ public class Bot {
             "/toRus text - translate English text into Russian\n" +
             "/quiz - play the quiz game\n" +
             "/stat - amount of the answered questions\n" +
-            "/authors - print the authors"};
+            "/authors - print the authors" +
+            "/dayWord hh:mm"};
 
     private static String[] wrongMessage = new String[]{"Wrong arguments!!!"};
 
@@ -15,6 +16,7 @@ public class Bot {
 
     private static String[] defaultOut = new String[]{"Invalid command"};
 
+    private static String[] dayWord = new String[]{"Слово дня добавлено"};
 
     public String[] getWelcome(String[] args, User user) {
         return welcome;
@@ -31,6 +33,11 @@ public class Bot {
             Translater translater = new Translater();
             return new String[]{translater.translateToRus(String.join(" ", args))};
         }
+    }
+
+    public String[] getDayWord(String[] args, User user){
+        user.timeOfDay = args[0];
+        return dayWord;
     }
 
     public String[] getAuthors(String[] args, User user) {

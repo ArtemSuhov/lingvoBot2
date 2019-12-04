@@ -5,6 +5,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
 import java.util.function.BiFunction;
 
 public class Main {
@@ -46,6 +47,7 @@ public class Main {
         commands.put(prefixCommand + "echo", bot::getEcho);
         commands.put(prefixCommand + "stat", quiz::getStats);
         commands.put(prefixCommand + "authors", bot::getAuthors);
+        commands.put(prefixCommand + "dayWord", bot::getDayWord);
         commands.put("", bot::getDefault);
 
         Map<String, BiFunction<String[], User, String[]>> quizCommands = new HashMap<>();
@@ -102,6 +104,9 @@ public class Main {
                 result.append(response[i] + " ");
 
             inputerOutputer.printMessage(new BotMessage(result.toString(), inputMessage.chatId));
+            Timer timer = new Timer();
+            var reminder = new Reminder(fireBase, inputerOutputer);
+            timer.schedule(reminder, 0, 400000);
         }
     }
 }

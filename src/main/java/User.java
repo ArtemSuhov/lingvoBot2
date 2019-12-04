@@ -7,6 +7,7 @@ public class User {
     UserState state;
     String answeredQuestions;
     String timeOfDay;
+    Boolean isSentWord;
 
     User(String id) {
         this.id = id;
