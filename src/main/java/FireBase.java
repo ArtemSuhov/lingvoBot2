@@ -5,6 +5,9 @@ import com.google.firebase.database.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -118,6 +121,37 @@ public class FireBase implements UserDatabase {
 
     public void updateUser(User user) {
         this.setString(usersPath, user.id, user.answeredQuestions + ";" + user.state + ";" + user.timeOfDay);
+    }
+
+    public List<User> getAllUsers(){
+        List<User> users = new ArrayList<>();
+        List<String> usersId = new ArrayList<>();
+        CompletableFuture<List<String>> task = new CompletableFuture<>();
+        databaseReference.child(usersPath).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterator<DataSnapshot> items = dataSnapshot.getChildren().iterator();
+                while (items.hasNext()){
+                    DataSnapshot item = items.next();
+                    usersId.add(item.getKey());
+                }
+                task.complete(usersId);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                //TODO: Добавить логирование
+            }
+        });
+        try {
+            List<String> response = task.get();
+            for (String id: response){
+                users.add(getUser(id));
+            }
+            return users;
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public Integer getCountOfQuestions() {
