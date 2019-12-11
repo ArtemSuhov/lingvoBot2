@@ -5,6 +5,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
 import java.util.function.BiFunction;
 
 public class Main {
@@ -31,11 +32,10 @@ public class Main {
                 //TODO: Запись ошиибок в логи, шатдавн.
             }
         }
-
-        Bot bot = new Bot();
+        Bot bot = new Bot(fireBase);
         Quiz quiz = new Quiz();
-
-        Map<String, Map<String, BiFunction<String[], User, String[]>>> states = new HashMap<>();
+        var dayWord = new DayWord(fireBase, inputerOutputer);
+        Map<UserState, Map<String, BiFunction<String[], User, String[]>>> states = new HashMap<>();
 
         Map<String, BiFunction<String[], User, String[]>> commands = new HashMap<>();
         commands.put(prefixCommand + "start", bot::getWelcome);
@@ -46,20 +46,23 @@ public class Main {
         commands.put(prefixCommand + "echo", bot::getEcho);
         commands.put(prefixCommand + "stat", quiz::getStats);
         commands.put(prefixCommand + "authors", bot::getAuthors);
+        commands.put(prefixCommand + "dayWord", bot::getDayWord);
         commands.put("", bot::getDefault);
 
         Map<String, BiFunction<String[], User, String[]>> quizCommands = new HashMap<>();
         quizCommands.put("", quiz::getAnswer);
 
-        states.put("Quiz", quizCommands);
-        states.put(User.defaultState, commands);
+        states.put(UserState.QUIZ, quizCommands);
+        states.put(UserState.DEFAULT, commands);
 
         String input = "";
         BotMessage inputMessage;
+        Timer timer = new Timer();
+        var reminder = new Reminder(fireBase, inputerOutputer, dayWord);
+        timer.schedule(reminder, 0, 10);
 
         while (true) {
             inputMessage = inputerOutputer.getInput();
-
             if (inputMessage == null) {
                 continue;
             }
@@ -71,13 +74,24 @@ public class Main {
             }
 
             User currentUser = fireBase.getUser(inputMessage.chatId);
+
             if (currentUser == null) {
                 fireBase.updateUser(new User(inputMessage.chatId));
                 currentUser = fireBase.getUser(inputMessage.chatId);
             }
-
+            if(currentUser.isSentWord && currentUser.isDayWordFinished){
+                if(dayWord.checkAnswer(input)){
+                    inputerOutputer.printMessage(new BotMessage("It's correct", inputMessage.chatId));
+                    currentUser.isDayWordFinished = false;
+                    continue;
+                }
+                else{
+                    inputerOutputer.printMessage(new BotMessage("It's false", inputMessage.chatId));
+                    continue;
+                }
+            }
             String[] response;
-            String currentState = currentUser.state;
+            UserState currentState = currentUser.state;
             String[] inputArray = input.split(" ");
             String command = input.startsWith(prefixCommand) ? inputArray[0] : "";
 

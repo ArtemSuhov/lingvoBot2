@@ -5,6 +5,9 @@ import com.google.firebase.database.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -80,7 +83,7 @@ public class FireBase implements UserDatabase {
         }
 
         String[] args = response.split(";");
-        return new User(id, args[0], args[1], args[2]);
+        return new User(id, args[0], UserState.valueOf(args[1]), args[2], Boolean.parseBoolean(args[3]), Boolean.parseBoolean(args[3]));
     }
 
     public Question getQuestion(String id) {
@@ -109,7 +112,38 @@ public class FireBase implements UserDatabase {
     }
 
     public void updateUser(User user) {
-        this.setString(usersPath, user.id, user.answeredQuestions + ";" + user.state + ";" + user.timeOfDay);
+        this.setString(usersPath, user.id, user.answeredQuestions + ";" + user.state
+                + ";" + user.timeOfDay + ";" + user.isSentWord + ";" + user.isDayWordFinished);
+    }
+
+    public List<User> getAllUsers(){
+        List<User> users = new ArrayList<>();
+        CompletableFuture<List<User>> task = new CompletableFuture<>();
+        databaseReference.child(usersPath).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterator<DataSnapshot> items = dataSnapshot.getChildren().iterator();
+                while (items.hasNext()){
+                    DataSnapshot item = items.next();
+                    String id = item.getKey();
+                    String[] userFields = item.getValue().toString().split(";");
+                    users.add(new User(id, userFields[0], UserState.valueOf(userFields[1]),
+                            userFields[2], Boolean.valueOf(userFields[3]), Boolean.valueOf(userFields[4])));
+                }
+                task.complete(users);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                //TODO: Добавить логирование
+            }
+        });
+        try {
+            List<User> response = task.get();
+            return users;
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public Integer getCountOfQuestions() {

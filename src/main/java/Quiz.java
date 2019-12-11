@@ -8,7 +8,8 @@ public class Quiz {
         int min = 1;
         Integer randomNumber = (int) ((Math.random() * ((max - min) + 1)) + min);
 
-        if (user.answeredQuestions.length() == numberOfQuestions * 2 + 2) {
+        String[] answered = user.answeredQuestions.split(" ");
+        if (answered.length == numberOfQuestions + 1) {
             return new String[]{"You answered all questions!"};
         }
 
@@ -17,7 +18,7 @@ public class Quiz {
         }
 
         user.addAnsweredQuestion(randomNumber);
-        user.changeState("Quiz");
+        user.changeState(UserState.QUIZ);
         fireBase.updateUser(user);
 
         return new String[]{"Translate the word",
@@ -26,7 +27,8 @@ public class Quiz {
     }
 
     public String[] getStats(String[] args, User user) {
-        return new String[]{"You have answered", String.valueOf(user.answeredQuestions.length() / 2 - 1), "questions"};
+        return new String[]{"You have answered", String.valueOf(user.answeredQuestions.split(" ").length - 1),
+                "questions"};
     }
 
     public String[] getAnswer(String[] args, User user) {
@@ -34,13 +36,12 @@ public class Quiz {
         String questionId = questionsIds[questionsIds.length - 1];
 
         Question currentQuestion = fireBase.getQuestion(questionId);
-
         if (currentQuestion.answer.toLowerCase().equals(args[0].toLowerCase())) {
-            user.changeState("Default");
+            user.changeState(UserState.DEFAULT);
             fireBase.updateUser(user);
             return new String[]{"Your answer is right!"};
         } else if (answer.equals(args[0])) {
-            user.changeState("Default");
+            user.changeState(UserState.DEFAULT);
             fireBase.updateUser(user);
             return new String[]{"Right answer is", currentQuestion.answer};
         }

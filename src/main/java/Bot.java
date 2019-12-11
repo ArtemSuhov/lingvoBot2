@@ -1,20 +1,28 @@
 public class Bot {
+
+    private FireBase fireBase;
+
+    public Bot(FireBase base){
+        this.fireBase = base;
+    }
     private static String[] helpMessage = new String[]{"/help - view the commands list \n" +
             "/echo text - print your text, that writed after this command\n" +
             "/random minValue maxValue - print a random number from range\n" +
             "/toRus text - translate English text into Russian\n" +
             "/quiz - play the quiz game\n" +
             "/stat - amount of the answered questions\n" +
-            "/authors - print the authors"};
+            "/authors - print the authors" +
+            "/dayWord hh:mm"};
 
     private static String[] wrongMessage = new String[]{"Wrong arguments!!!"};
 
-    private static String[] authors = new String[]{"Artem Sukhov and Roman Zemskov in 2019"};
+    private static String[] authors = new String[]{"Artem Sukhov, Sofya Gorbunova and Alexander Khrushev in 2019"};
 
     private static String[] welcome = new String[]{"You can write \"/help\",if you want to see the list of commands."};
 
     private static String[] defaultOut = new String[]{"Invalid command"};
 
+    private static String[] dayWord = new String[]{"Set time for the word of the day"};
 
     public String[] getWelcome(String[] args, User user) {
         return welcome;
@@ -31,6 +39,16 @@ public class Bot {
             Translater translater = new Translater();
             return new String[]{translater.translateToRus(String.join(" ", args))};
         }
+    }
+
+    public String[] getDayWord(String[] args, User user){
+        if (args.length == 0 || args[0] == ""){
+            return wrongMessage;
+        }
+        user.timeOfDay = args[0];
+        user.isSentWord = false;
+        fireBase.updateUser(user);
+        return dayWord;
     }
 
     public String[] getAuthors(String[] args, User user) {
