@@ -5,9 +5,11 @@ import java.time.format.DateTimeFormatter;
 public class Bot {
 
     private FireBase fireBase;
+    private Reminder reminder;
 
-    public Bot(FireBase base){
+    public Bot(FireBase base, Reminder reminder){
         this.fireBase = base;
+        this.reminder = reminder;
     }
     private static String[] helpMessage = new String[]{"/help - view the commands list \n" +
             "/echo text - print your text, that writed after this command\n" +
@@ -57,6 +59,7 @@ public class Bot {
         }
         user.isSentWord = false;
         fireBase.updateUser(user);
+        reminder.updateAllUsers();
         return dayWord;
     }
 

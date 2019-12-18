@@ -18,10 +18,10 @@ public class Reminder extends TimerTask{
 
     public void updateAllUsers(){
         users = new ArrayList<> (fireBase.getAllUsers());
+        System.out.println("upd");
     }
 
     public void checkUsersTime(){
-
         var currentUsers = users;
         for (var user : currentUsers) {
             if (user.timeOfDay == null) {
@@ -33,13 +33,18 @@ public class Reminder extends TimerTask{
                     dayWord.beginGame(user);
                     updateAllUsers();
                 }
-            } else {
+            } else if (isTimeToReset(userTime)){
                 user.isDayWordFinished = false;
                 user.isSentWord = false;
                 fireBase.updateUser(user);
                 updateAllUsers();
             }
         }
+    }
+
+    private Boolean isTimeToReset(LocalTime userTime){
+        var now = LocalTime.now();
+        return now.isAfter(userTime.plusHours(1)) || now.equals(userTime.plusHours(1));
     }
 
     private Boolean isTimeToSend(LocalTime userTime){

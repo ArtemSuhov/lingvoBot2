@@ -5,13 +5,15 @@ import org.junit.Assert;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class TestDayWord {
     @Test
     public void testWrongArguments(){
         var base = FireBase.getInstance();
-        var bot = new Bot(base);
+        var io = new ConsoleIO();
+        var bot = new Bot(base, new Reminder(base, io,new DayWord(base, io)));
         var user = new User("UserId","0 1");
         var respond = bot.getDayWord(new String[] {"test time"}, user);
         Assert.assertArrayEquals(new String[] {"Wrong arguments!!!"}, respond);
@@ -20,7 +22,8 @@ public class TestDayWord {
     @Test
     public void testSetTimeDayWord(){
         var base = FireBase.getInstance();
-        var bot = new Bot(base);
+        var io = new ConsoleIO();
+        var bot = new Bot(base, new Reminder(base, io,new DayWord(base, io)));
         var user = new User("UserId","0 1");
         var respond = bot.getDayWord(new String[] {"22:22"}, user);
         Assert.assertArrayEquals(new String[] {"Set time for the word of the day"}, respond);
@@ -46,24 +49,25 @@ public class TestDayWord {
         Assert.assertEquals(true, user.isSentWord);
     }
 
-    //@Test
-    //не работает из за ошибки с потоками
-    //public void testCheckUserTime(){
-    //    var base = FireBase.getInstance();
-    //    var io = new ConsoleIO();
-    //    var user = new User("UserId", "0 1", UserState.DEFAULT, LocalTime.now(),
-    //            false, false);
-    //    base.updateUser(user);
-    //    var dayWord = new DayWord(base, io);
-    //    var reminder = new Reminder(base, io, dayWord);
-    //    reminder.updateAllUsers();
-    //    reminder.checkUsersTime();
-    //    Assert.assertEquals(true, user.isSentWord);
-    //    var userAfter = new User("UserId", "0 1", UserState.DEFAULT, LocalTime.now().plusHours(1),
-    //            false, false);
-    //    base.updateUser(userAfter);
-    //    reminder.updateAllUsers();
-    //    Assert.assertEquals(false, userAfter.isSentWord);
-    //}
+    @Test
+    public void testCheckUserTime(){
+        var base = FireBase.getInstance();
+        var io = new ConsoleIO();
+        var user = new User("UserId", "0 1", UserState.DEFAULT, LocalTime.now(),
+                false, false);
+        base.updateUser(user);
+        var dayWord = new DayWord(base, io);
+        var reminder = new Reminder(base, io, dayWord);
+        var bot = new Bot (base,reminder);
+        bot.getDayWord(new String[] {LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME)},user);
+        reminder.updateAllUsers();
+        reminder.checkUsersTime();
+        Assert.assertEquals(true, base.getUser(user.id).isSentWord);
+        var userAfter = new User("UserId", "0 1", UserState.DEFAULT, LocalTime.now().plusHours(1),
+                false, false);
+        base.updateUser(userAfter);
+        reminder.updateAllUsers();
+        Assert.assertEquals(false, base.getUser(userAfter.id).isSentWord);
+    }
 
 }

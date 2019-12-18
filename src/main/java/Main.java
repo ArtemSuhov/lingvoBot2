@@ -32,9 +32,13 @@ public class Main {
                 //TODO: Запись ошиибок в логи, шатдавн.
             }
         }
-        Bot bot = new Bot(fireBase);
-        Quiz quiz = new Quiz();
         var dayWord = new DayWord(fireBase, inputerOutputer);
+        Timer timer = new Timer();
+        var reminder = new Reminder(fireBase, inputerOutputer, dayWord);
+        timer.schedule(reminder, 0, 30);
+        Bot bot = new Bot(fireBase, reminder);
+        Quiz quiz = new Quiz();
+
         Map<UserState, Map<String, BiFunction<String[], User, String[]>>> states = new HashMap<>();
 
         Map<String, BiFunction<String[], User, String[]>> commands = new HashMap<>();
@@ -57,9 +61,7 @@ public class Main {
 
         String input = "";
         BotMessage inputMessage;
-        Timer timer = new Timer();
-        var reminder = new Reminder(fireBase, inputerOutputer, dayWord);
-        timer.schedule(reminder, 0, 30);
+
 
         while (true) {
             inputMessage = inputerOutputer.getInput();
