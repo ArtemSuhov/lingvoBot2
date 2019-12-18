@@ -34,7 +34,7 @@ public class Main {
         }
         Bot bot = new Bot(fireBase);
         Quiz quiz = new Quiz();
-
+        var dayWord = new DayWord(fireBase, inputerOutputer);
         Map<UserState, Map<String, BiFunction<String[], User, String[]>>> states = new HashMap<>();
 
         Map<String, BiFunction<String[], User, String[]>> commands = new HashMap<>();
@@ -57,10 +57,12 @@ public class Main {
 
         String input = "";
         BotMessage inputMessage;
+        Timer timer = new Timer();
+        var reminder = new Reminder(fireBase, inputerOutputer, dayWord);
+        timer.schedule(reminder, 0, 30);
 
         while (true) {
             inputMessage = inputerOutputer.getInput();
-
             if (inputMessage == null) {
                 continue;
             }
@@ -72,11 +74,26 @@ public class Main {
             }
 
             User currentUser = fireBase.getUser(inputMessage.chatId);
+
             if (currentUser == null) {
                 fireBase.updateUser(new User(inputMessage.chatId));
+                reminder.updateAllUsers();
                 currentUser = fireBase.getUser(inputMessage.chatId);
             }
-
+            if(currentUser.isSentWord && !currentUser.isDayWordFinished ){
+                if(dayWord.checkAnswer(input)){
+                    inputerOutputer.printMessage(new BotMessage("It's correct", inputMessage.chatId));
+                    currentUser.isDayWordFinished = true;
+                    currentUser.changeState(UserState.DEFAULT);
+                    fireBase.updateUser(currentUser);
+                    reminder.updateAllUsers();
+                    continue;
+                }
+                else{
+                    inputerOutputer.printMessage(new BotMessage("It's false", inputMessage.chatId));
+                    continue;
+                }
+            }
             String[] response;
             UserState currentState = currentUser.state;
             String[] inputArray = input.split(" ");
@@ -103,9 +120,6 @@ public class Main {
                 result.append(response[i] + " ");
 
             inputerOutputer.printMessage(new BotMessage(result.toString(), inputMessage.chatId));
-            Timer timer = new Timer();
-            var reminder = new Reminder(fireBase, inputerOutputer);
-            timer.schedule(reminder, 0, 10);
         }
     }
 }

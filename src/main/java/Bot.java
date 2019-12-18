@@ -1,3 +1,7 @@
+import java.time.format.DateTimeParseException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 public class Bot {
 
     private FireBase fireBase;
@@ -42,10 +46,16 @@ public class Bot {
     }
 
     public String[] getDayWord(String[] args, User user){
-        if (args.length == 0 || args[0] == ""){
+        if (args.length == 0 || args[0].equals("")){
             return wrongMessage;
         }
-        user.timeOfDay = args[0];
+        try{
+         user.timeOfDay = LocalTime.parse(args[0], DateTimeFormatter.ISO_LOCAL_TIME);
+        }
+        catch (DateTimeParseException  e) {
+            return wrongMessage;
+        }
+        user.isSentWord = false;
         fireBase.updateUser(user);
         return dayWord;
     }

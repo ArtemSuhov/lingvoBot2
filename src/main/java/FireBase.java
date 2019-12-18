@@ -1,11 +1,16 @@
+import com.google.api.LabelDescriptorOrBuilder;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.*;
 import com.google.firebase.database.*;
+import org.python.modules._sre;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -83,7 +88,16 @@ public class FireBase implements UserDatabase {
         }
 
         String[] args = response.split(";");
-        return new User(id, args[0], UserState.valueOf(args[1]), args[2], Boolean.valueOf(args[3]));
+        return new User(id, args[0], UserState.valueOf(args[1]), parseTime(args[2]),
+                Boolean.parseBoolean(args[3]), Boolean.parseBoolean(args[4]));
+    }
+
+    private LocalTime parseTime(String strTime){
+        LocalTime time = null;
+        if (!strTime.equals("null")){
+            time = LocalTime.parse(strTime, DateTimeFormatter.ISO_LOCAL_TIME);
+        }
+        return time;
     }
 
     public Question getQuestion(String id) {
@@ -111,9 +125,16 @@ public class FireBase implements UserDatabase {
                 .setValue(content, completionListener);
     }
 
+
     public void updateUser(User user) {
+        String time;
+        if (user.timeOfDay == null)
+            time = null;
+        else{
+            time = user.timeOfDay.format(DateTimeFormatter.ISO_LOCAL_TIME);
+        }
         this.setString(usersPath, user.id, user.answeredQuestions + ";" + user.state
-                + ";" + user.timeOfDay + ";" + user.isSentWord);
+                + ";" + time + ";" + user.isSentWord + ";" + user.isDayWordFinished);
     }
 
     public List<User> getAllUsers(){
@@ -128,7 +149,9 @@ public class FireBase implements UserDatabase {
                     String id = item.getKey();
                     String[] userFields = item.getValue().toString().split(";");
                     users.add(new User(id, userFields[0], UserState.valueOf(userFields[1]),
-                            userFields[2], Boolean.valueOf(userFields[3])));
+                            parseTime(userFields[2]),
+                            Boolean.valueOf(userFields[3]),
+                            Boolean.valueOf(userFields[4])));
                 }
                 task.complete(users);
             }
@@ -138,8 +161,8 @@ public class FireBase implements UserDatabase {
             }
         });
         try {
-            List<User> response = task.get();
-            return users;
+            var response = task.get();
+            return response;
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
             return null;
@@ -163,7 +186,8 @@ public class FireBase implements UserDatabase {
     public void addQuestion(Question question) {
         Integer countOfQuestions = this.getCountOfQuestions();
         countOfQuestions += 1;
-        this.setString(questionsPath, countOfQuestions.toString(), question.textOfQuestion + ":" + question.answer);
+        this.setString(questionsPath, countOfQuestions.toString(),
+                question.textOfQuestion + ":" + question.answer);
         this.setString(questionsPath, "count", countOfQuestions.toString());
     }
 }

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fefc1b4f-50b3-4263-b1e7-c8d7d7badf24" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DayWord.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Bot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Bot.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/FireBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FireBase.java" afterDir="false" />
@@ -12,12 +12,12 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/UserState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/UserState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tests/java/TestQuiz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/java/TestQuiz.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Bot.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bot.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FireBase$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FireBase$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FireBase$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FireBase$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FireBase$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FireBase$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/FireBase.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FireBase.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Reminder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Reminder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/TestQuiz.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TestQuiz.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/UserState.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/UserState.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -84,40 +84,41 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestQuiz" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestDayWord.testCheckUserTime" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="lingvoBot2" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TestQuiz" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestQuiz.testGetAnswer" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="lingvoBot2" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TestQuiz" />
-      <option name="METHOD_NAME" value="testGetAnswer" />
+      <option name="MAIN_CLASS_NAME" value="TestDayWord" />
+      <option name="METHOD_NAME" value="testCheckUserTime" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestQuiz.testGetStat" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestDayWord.testGenerateVariant" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="lingvoBot2" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TestQuiz" />
-      <option name="METHOD_NAME" value="testGetStat" />
+      <option name="MAIN_CLASS_NAME" value="TestDayWord" />
+      <option name="METHOD_NAME" value="testGenerateVariant" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestQuiz.testWrongAnswer" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestDayWord.testSetTimeDayWord" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="lingvoBot2" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TestQuiz" />
-      <option name="METHOD_NAME" value="testWrongAnswer" />
+      <option name="MAIN_CLASS_NAME" value="TestDayWord" />
+      <option name="METHOD_NAME" value="testSetTimeDayWord" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestDayWord.testWrongArguments" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lingvoBot2" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TestDayWord" />
+      <option name="METHOD_NAME" value="testWrongArguments" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -151,19 +152,19 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
-      <item itemvalue="JUnit.TestQuiz.testWrongAnswer" />
-      <item itemvalue="JUnit.TestQuiz.testGetAnswer" />
-      <item itemvalue="JUnit.TestQuiz.testGetStat" />
-      <item itemvalue="JUnit.TestQuiz" />
       <item itemvalue="Maven.java_bot [clean,package]" />
+      <item itemvalue="JUnit.TestDayWord.testWrongArguments" />
+      <item itemvalue="JUnit.TestDayWord.testSetTimeDayWord" />
+      <item itemvalue="JUnit.TestDayWord.testGenerateVariant" />
+      <item itemvalue="JUnit.TestDayWord.testCheckUserTime" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.TestQuiz" />
-        <item itemvalue="JUnit.TestQuiz.testGetStat" />
-        <item itemvalue="JUnit.TestQuiz.testGetAnswer" />
-        <item itemvalue="JUnit.TestQuiz.testWrongAnswer" />
+        <item itemvalue="JUnit.TestDayWord.testCheckUserTime" />
+        <item itemvalue="JUnit.TestDayWord.testGenerateVariant" />
+        <item itemvalue="JUnit.TestDayWord.testSetTimeDayWord" />
+        <item itemvalue="JUnit.TestDayWord.testWrongArguments" />
       </list>
     </recent_temporary>
   </component>
@@ -180,6 +181,7 @@
       <workItem from="1575198183685" duration="2838000" />
       <workItem from="1575201471893" duration="17789000" />
       <workItem from="1575222196532" duration="1610000" />
+      <workItem from="1576523461780" duration="38009000" />
     </task>
     <servers />
   </component>
@@ -200,15 +202,6 @@
     </option>
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Reminder.java</url>
-          <line>27</line>
-          <option name="timeStamp" value="28" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="JUnit">
         <watch expression="user.answeredQuestions" language="JAVA" />
@@ -217,5 +210,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/java_bot$Main.ic" NAME="Main Coverage Results" MODIFIED="1574058083438" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/lingvoBot2$Main.ic" NAME="Main Coverage Results" MODIFIED="1576605396033" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
