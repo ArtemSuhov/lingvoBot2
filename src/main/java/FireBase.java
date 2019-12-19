@@ -137,6 +137,12 @@ public class FireBase implements UserDatabase {
                 + ";" + time + ";" + user.isSentWord + ";" + user.isDayWordFinished);
     }
 
+    public void updateUser(User user, String time) {
+        this.setString(usersPath, user.id, user.answeredQuestions + ";" + user.state
+                + ";" + time + ";" + user.isSentWord + ";" + user.isDayWordFinished);
+    }
+
+
     public List<User> getAllUsers(){
         List<User> users = new ArrayList<>();
         CompletableFuture<List<User>> task = new CompletableFuture<>();

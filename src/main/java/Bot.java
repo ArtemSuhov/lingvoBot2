@@ -58,7 +58,8 @@ public class Bot {
             return wrongMessage;
         }
         user.isSentWord = false;
-        fireBase.updateUser(user);
+        user.isDayWordFinished = false;
+        fireBase.updateUser(user, args[0]);
         reminder.updateAllUsers();
         return dayWord;
     }

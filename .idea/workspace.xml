@@ -4,12 +4,12 @@
     <list default="true" id="fefc1b4f-50b3-4263-b1e7-c8d7d7badf24" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Bot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Bot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FireBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FireBase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Reminder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Reminder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tests/java/TestDayWord.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/java/TestDayWord.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Bot.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bot.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FireBase$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FireBase$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FireBase.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FireBase.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Reminder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Reminder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TestDayWord.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TestDayWord.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -69,7 +69,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.TestDayWord.testCheckUserTime">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="lingvoBot2" />
@@ -153,8 +153,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TestDayWord.testCheckUserTime" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.TestDayWord.testCheckUserTime" />
         <item itemvalue="JUnit.TestDayWord.testGenerateVariant" />
         <item itemvalue="JUnit.TestDayWord.testSetTimeDayWord" />
         <item itemvalue="JUnit.TestDayWord.testWrongArguments" />
@@ -175,7 +175,7 @@
       <workItem from="1575201471893" duration="17789000" />
       <workItem from="1575222196532" duration="1610000" />
       <workItem from="1576523461780" duration="40461000" />
-      <workItem from="1576699894057" duration="4353000" />
+      <workItem from="1576699894057" duration="6917000" />
     </task>
     <servers />
   </component>
@@ -196,15 +196,6 @@
     </option>
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/tests/java/TestDayWord.java</url>
-          <line>61</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="JUnit">
         <watch expression="user.answeredQuestions" language="JAVA" />

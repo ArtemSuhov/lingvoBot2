@@ -18,7 +18,6 @@ public class Reminder extends TimerTask{
 
     public void updateAllUsers(){
         users = new ArrayList<> (fireBase.getAllUsers());
-        System.out.println("upd");
     }
 
     public void checkUsersTime(){
